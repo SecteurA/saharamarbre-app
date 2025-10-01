@@ -79,13 +79,7 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      {/* <Route path="/demo" element={<DemoMode />} /> */}
-      <Route path="/" element={
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      }>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Dashboard />} />
         {/* Sales & Orders */}
         <Route path="orders" element={<Orders />} />

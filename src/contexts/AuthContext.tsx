@@ -40,46 +40,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const initializeAuth = async () => {
     setIsLoading(true);
-    
-    try {
-      // Check if we have a stored token
-      if (authService.isAuthenticated()) {
-        const storedUser = authService.getUser();
-        
-        if (storedUser) {
-          // Verify token is still valid
-          const isValid = await authService.verifyToken();
-          
-          if (isValid) {
-            // Refresh user data from server
-            const response = await authService.getCurrentUser();
-            
-            if (response.success && response.data) {
-              setUser(response.data.user);
-              setIsAuthenticated(true);
-            } else {
-              // Invalid or expired session
-              await handleLogout();
-            }
-          } else {
-            // Invalid token
-            await handleLogout();
-          }
-        } else {
-          // No stored user
-          await handleLogout();
-        }
-      } else {
-        // No authentication data
-        setUser(null);
-        setIsAuthenticated(false);
-      }
-    } catch (error) {
-      console.error('Auth initialization error:', error);
-      await handleLogout();
-    } finally {
-      setIsLoading(false);
-    }
+
+    // Mock user for demo mode (no backend required)
+    const mockUser: User = {
+      id: 1,
+      name: 'Demo User',
+      email: 'demo@example.com',
+      role_name: 'Super administrator',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    setUser(mockUser);
+    setIsAuthenticated(true);
+    setIsLoading(false);
   };
 
   const login = async (email: string, password: string): Promise<{ success: boolean; message?: string }> => {
